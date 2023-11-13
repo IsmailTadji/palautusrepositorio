@@ -34,6 +34,33 @@ Register With Nonmatching Password And Password Confirmation
     Submit Credentials
     Register Should Fail With Message  Password and Password confirmation don't match
 
+Login After Successful Registration
+    Set Username  ronaldo
+    Set Password  ronaldo1
+    Set Password Confirmation  ronaldo1
+    Submit Credentials
+    Register Should Succeed
+    Go To Main Page
+    Click Button  Logout
+    Logout Should Succeed
+    Set Username  ronaldo
+    Set Password  ronaldo1
+    Submit Credentials Login
+    Login Should Succeed
+
+
+Login After Failed Registration
+    Set Username  ronaldo
+    Set Password  ronaldo1
+    Set Password Confirmation  ronaldo2
+    Submit Credentials
+    Register Should Fail With Message  Password and Password confirmation don't match
+    Click Link  Login
+    Set Username  ronaldo
+    Set Password  ronaldo1
+    Submit Credentials Login
+    Login Should Fail With Message  Invalid username or password
+
 
 *** Keywords ***
 Create User And Go To Register Page
@@ -41,8 +68,17 @@ Create User And Go To Register Page
     Go To Register Page
     Register Page Should Be Open
 
+Submit Credentials Login
+    Click Button  Login
+
+Logout Should Succeed
+    Login Page Should Be Open
+
 Register Should Succeed
     Welcome Page Should Be Open
+
+Login Should Succeed
+    Main Page Should Be Open
 
 Set Username
     [Arguments]  ${username}
@@ -62,4 +98,9 @@ Submit Credentials
 Register Should Fail With Message
     [Arguments]  ${message}
     Register Page Should Be Open
+    Page Should Contain  ${message}
+
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
     Page Should Contain  ${message}
