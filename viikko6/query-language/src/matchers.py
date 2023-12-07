@@ -18,6 +18,15 @@ class Not:
             return False
         return True
 
+class Or:
+    def __init__(self, *matcher):
+        self.matcher = matcher
+
+    def test(self, player):
+        for i in self.matcher:
+            if i.test(player):
+                return True
+        return False
 
 class All:
     def __init__(self):
