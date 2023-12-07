@@ -17,3 +17,6 @@ class QueryBuilder():
     def hasAtLeast(self, value, attr):
         return QueryBuilder(And(self.query, HasAtLeast(value, attr)))
     
+    def oneOf(self, *matchers):
+        return QueryBuilder(Or(*matchers))
+    
